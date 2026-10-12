@@ -47,7 +47,7 @@ def load_dotenv(path: Path) -> None:
 def load_roots(config_dir: Path) -> list[Path]:
     path = config_path(config_dir)
     if not path.is_file():
-        raise ConfigError(f"No roots yet. Run: ff init PATH [PATH...]")
+        raise ConfigError("No roots yet. Run: ff init PATH [PATH...]")
     import json
 
     try:

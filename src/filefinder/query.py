@@ -49,7 +49,7 @@ _LANE = {
     "ripgrep": "ripgrep",
 }
 
-# Default local model (bge-small) scores unrelated chunks around 0.4–0.5
+# Default local model (bge-small) scores unrelated chunks around 0.4-0.5
 # and a real paraphrase higher. The floor drops the unrelated tail.
 _VECTOR_MIN = 0.55
 

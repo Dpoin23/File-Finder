@@ -186,7 +186,7 @@ def _embed_pending(con: sqlite3.Connection, embedder, pending: list[tuple[int, s
     for start in range(0, len(pending), _EMBED_BATCH):
         batch = pending[start : start + _EMBED_BATCH]
         matrix = embedder.embed([text for _, text in batch])
-        for (chunk_id, _), vec in zip(batch, matrix):
+        for (chunk_id, _), vec in zip(batch, matrix, strict=True):
             con.execute(
                 "INSERT OR REPLACE INTO vectors(chunk_id, dim, vec) VALUES (?, ?, ?)",
                 (chunk_id, int(vec.shape[0]), pack_vector(vec)),

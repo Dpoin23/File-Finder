@@ -56,6 +56,9 @@ ff query --explain "how we bill annual customers"
 
 ```bash
 make test
+make check
 ```
 
 The tests inject a tiny stand-in embedder so they do not download model weights. `ff index` and descriptive `ff query` use the real local model.
+
+GitHub Actions runs the same lint, syntax, test, and smoke checks on `main` and on pull requests. CodeQL scans Python weekly. Dependabot opens weekly update PRs for Python packages and GitHub Actions.
