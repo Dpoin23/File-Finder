@@ -5,8 +5,8 @@ description = "Local search over folders and repositories by filename or descrip
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "numpy>=2.4.6",
     "fastembed>=0.9.0",
-    "numpy>=1.26",
     "pathspec>=1.1.1",
 ]
 
