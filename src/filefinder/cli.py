@@ -46,6 +46,14 @@ def main(argv: list[str] | None = None) -> int:
         help="Add one sentence. A remote model reranks only when FF_EXPLAIN_BASE_URL is set.",
     )
 
+    ui = sub.add_parser("ui", help="Open the search popup")
+    ui.add_argument("--limit", type=int, default=20, help="Maximum paths to show")
+    ui.add_argument(
+        "--explain",
+        action="store_true",
+        help="Start with an explanation sentence. A remote model reranks only when configured.",
+    )
+
     args = parser.parse_args(argv)
     config_dir = Path(args.config_dir).expanduser().resolve() if args.config_dir else default_config_dir()
     try:
@@ -53,6 +61,8 @@ def main(argv: list[str] | None = None) -> int:
             return _init(config_dir, args.paths)
         if args.command == "index":
             return _index(config_dir, skip_embed=args.skip_embed)
+        if args.command == "ui":
+            return _ui(config_dir, limit=args.limit, explain=args.explain)
         return _query(config_dir, " ".join(args.text), limit=args.limit, explain_result=args.explain)
     except ConfigError as exc:
         print(str(exc), file=sys.stderr)
@@ -88,6 +98,15 @@ def _index(config_dir: Path, *, skip_embed: bool) -> int:
         f"removed {stats.removed}, chunks in index {stats.chunks}"
     )
     return 0
+
+
+def _ui(config_dir: Path, *, limit: int, explain: bool) -> int:
+    if limit < 1:
+        print("--limit must be at least 1", file=sys.stderr)
+        return 2
+    from filefinder.ui import run_ui
+
+    return run_ui(config_dir, limit=limit, explain=explain)
 
 
 def _query(config_dir: Path, text: str, *, limit: int, explain_result: bool) -> int:
