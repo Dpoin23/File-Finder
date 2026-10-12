@@ -1,0 +1,9 @@
+name: File-Finder CodeQL config
+
+queries:
+  - uses: security-and-quality
+
+paths-ignore:
+  - venv
+  - .venv
+  - bin
