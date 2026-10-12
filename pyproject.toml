@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "fastembed>=0.4",
-    "numpy>=1.26",
+    "numpy>=2.4.6",
     "pathspec>=0.12",
 ]
 
