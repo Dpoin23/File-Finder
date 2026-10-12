@@ -2,7 +2,7 @@
 
 Local search over folders and repositories. A filename fragment and a sentence about the contents both hit the same index. File bytes stay on the machine. A model, if used at all, only reranks the top 15 snippets and stays off unless you opt in.
 
-The search behavior is specified in [docs/DESIGN.md](docs/DESIGN.md). The desktop launcher is a later surface, specified in [docs/DESKTOP.md](docs/DESKTOP.md).
+The search behavior is specified in [docs/DESIGN.md](docs/DESIGN.md). The popup is specified in [docs/DESKTOP.md](docs/DESKTOP.md).
 
 ## Setup
 
@@ -34,6 +34,7 @@ ff query "auth middleware"
 ff query "how we bill annual customers"
 ff query ValidateRefund
 ff query --explain "how we bill annual customers"
+ff ui
 ```
 
 `ff init` writes an explicit root list. It does not index the whole disk.
@@ -51,6 +52,8 @@ ff query --explain "how we bill annual customers"
 | Quoted string or bare identifier (`ValidateRefund`) | Path catalog and ripgrep. |
 
 `--explain` adds one sentence. With no remote settings, that sentence is written locally and the order does not change. With `FF_EXPLAIN_BASE_URL` and `FF_EXPLAIN_MODEL`, only the top 15 snippets are sent and the shortlist is reordered.
+
+`ff ui` opens a search popup on the same index. Type a filename or a description. Each result shows the path, the matching chunk, and the lane. The side panel breaks the path into segments and draws a tree of the hits. Enter opens the file. Escape closes the window. `FF_EDITOR` (then `VISUAL`, then `EDITOR`) chooses the program; otherwise the file opens with the system default.
 
 ## Tests
 
