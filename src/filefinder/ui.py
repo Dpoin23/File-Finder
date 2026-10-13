@@ -1,4 +1,4 @@
-"""Search popup. `ff ui` opens one window on the same index as `ff query`."""
+"""Window onto the existing commands. `ff init`, `ff index`, and `ff query` are unchanged."""
 
 from __future__ import annotations
 
@@ -277,8 +277,17 @@ class Launcher(_Window):
             fg=_FAINT,
             font=(self._font, 9),
         ).grid(row=0, column=0, sticky="w")
-        self.status = tk.Label(footer, text=catalog_summary(self.config_dir), bg=_BG, fg=_MUTED, font=(self._font, 9))
+        self.status = tk.Label(footer, text="", bg=_BG, fg=_MUTED, font=(self._font, 9))
         self.status.grid(row=0, column=1, sticky="e")
+        self.catalog = tk.Label(
+            footer,
+            text=catalog_summary(self.config_dir),
+            bg=_BG,
+            fg=_FAINT,
+            font=(self._font, 9),
+            anchor="w",
+        )
+        self.catalog.grid(row=1, column=0, columnspan=2, sticky="w", pady=(4, 0))
         detail.bind("<Configure>", self._rewrap_path)
 
     def _place(self) -> None:
@@ -692,7 +701,7 @@ class Launcher(_Window):
         if view.error:
             return view.error
         if not view.query:
-            return catalog_summary(self.config_dir)
+            return ""
         noun = "result" if len(view.hits) == 1 else "results"
         status = f"{len(view.hits)} {noun}"
         if view.notice:

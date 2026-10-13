@@ -6,7 +6,7 @@ The search behavior is specified in [docs/DESIGN.md](docs/DESIGN.md). The popup 
 
 ## Setup
 
-Python 3.11 or newer, and [ripgrep](https://github.com/BurntSushi/ripgrep) on `PATH` for exact symbols and quoted strings.
+Python 3.11 or newer, and [ripgrep](https://github.com/BurntSushi/ripgrep) on `PATH` for exact symbols and quoted strings. `ff ui` also needs tkinter, which ships with Python and is installed as an OS package (`sudo apt install python3-tk` on Debian or Ubuntu). It is not a pip package, so it is not listed in `pyproject.toml`.
 
 ```bash
 python3 -m venv .venv
@@ -53,7 +53,7 @@ ff ui
 
 `--explain` adds one sentence. With no remote settings, that sentence is written locally and the order does not change. With `FF_EXPLAIN_BASE_URL` and `FF_EXPLAIN_MODEL`, only the top 15 snippets are sent and the shortlist is reordered.
 
-`ff ui` opens a search popup on the same index. Type a filename or a description. Each result shows the path, the matching chunk, and the lane. The side panel breaks the path into segments and draws a tree of the hits. Enter opens the file. Escape closes the window. `FF_EDITOR` (then `VISUAL`, then `EDITOR`) chooses the program; otherwise the file opens with the system default.
+`ff init`, `ff index`, and `ff query` are unchanged. `ff ui` opens a window on the same roots and index. The footer shows the root list and the catalog those commands wrote. The search box runs the same query as `ff query` and shows the path, the matching chunk, the lane, and a tree of the hits. Enter opens the file. Escape closes the window. `FF_EDITOR` (then `VISUAL`, then `EDITOR`) chooses the program; otherwise the file opens with the system default.
 
 ## Tests
 

@@ -9,6 +9,8 @@ dependencies = [
     "fastembed>=0.9.0",
     "pathspec>=1.1.1",
 ]
+# `ff ui` uses tkinter from the standard library. Install the OS package
+# (Debian/Ubuntu: python3-tk). It is not published on PyPI, so it is not a dependency here.
 
 [project.optional-dependencies]
 dev = [

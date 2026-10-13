@@ -46,7 +46,14 @@ def main(argv: list[str] | None = None) -> int:
         help="Add one sentence. A remote model reranks only when FF_EXPLAIN_BASE_URL is set.",
     )
 
-    ui = sub.add_parser("ui", help="Open the search popup")
+    ui = sub.add_parser(
+        "ui",
+        help="Open a window on the same roots and index",
+        description=(
+            "Visualize ff init, ff index, and ff query. "
+            "Those commands stay the same and still run in the terminal."
+        ),
+    )
     ui.add_argument("--limit", type=int, default=20, help="Maximum paths to show")
     ui.add_argument(
         "--explain",
@@ -63,7 +70,10 @@ def main(argv: list[str] | None = None) -> int:
             return _index(config_dir, skip_embed=args.skip_embed)
         if args.command == "ui":
             return _ui(config_dir, limit=args.limit, explain=args.explain)
-        return _query(config_dir, " ".join(args.text), limit=args.limit, explain_result=args.explain)
+        if args.command == "query":
+            return _query(config_dir, " ".join(args.text), limit=args.limit, explain_result=args.explain)
+        print(f"Unknown command: {args.command}", file=sys.stderr)
+        return 2
     except ConfigError as exc:
         print(str(exc), file=sys.stderr)
         return 2

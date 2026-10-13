@@ -135,6 +135,20 @@ def test_open_argv_default_opener(monkeypatch):
     assert open_argv("/tmp/auth.py", None) is None
 
 
+def test_original_commands_remain(capsys):
+    with pytest.raises(SystemExit) as caught:
+        main(["--help"])
+    assert caught.value.code == 0
+    help_text = capsys.readouterr().out
+    for command in ("init", "index", "query", "ui"):
+        assert command in help_text
+
+    with pytest.raises(SystemExit) as caught:
+        main(["ui", "--help"])
+    assert caught.value.code == 0
+    assert "Those commands stay the same" in capsys.readouterr().out
+
+
 def test_cli_ui_dispatches(tmp_path: Path, monkeypatch):
     seen = {}
 
@@ -191,6 +205,7 @@ def test_window_renders_hit_path_and_tree(tmp_path: Path, config_dir: Path):
         assert window.tree.get_children()
         assert "auth.py" in window.match.get("1.0", "end")
         assert "1 result" in window.status.cget("text")
+        assert "files" in window.catalog.cget("text")
     finally:
         window.destroy()
 

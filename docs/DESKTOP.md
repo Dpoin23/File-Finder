@@ -6,9 +6,9 @@ The desktop surface is a launcher popup on a local background process. Search be
 
 The visible app is a launcher, in the style of a system search popup. It is a real local process, because the index and the files live on disk. It is not a multi-page application, and it is not a browser extension.
 
-`ff ui` opens the window. The user types a filename fragment or a description of the contents. The list shows a few results: path, matching chunk, and which lane produced the hit. A side panel shows the path as segments and a tree of those hits under their roots. Enter opens the file in `FF_EDITOR`, `VISUAL`, `EDITOR`, or the default application. Escape closes the window.
+`ff ui` opens the window. `ff init`, `ff index`, and `ff query` stay terminal commands. The window reads the roots and the catalog those commands wrote, and a search calls the same function as `ff query`. The list shows the path, the matching chunk, and which lane produced the hit. A side panel shows the path as segments and a tree of those hits under their roots. Enter opens the file in `FF_EDITOR`, `VISUAL`, `EDITOR`, or the default application. Escape closes the window.
 
-A global hotkey and a tray icon are not part of this command. The tray would show whether the index is current and could trigger a refresh. The window itself does not walk the tree or embed anything. It calls the same search function as `ff query`.
+A global hotkey and a tray icon are not part of this command. The tray would show whether the index is current and could trigger a refresh. The window does not walk the tree or embed anything.
 
 ## Why this shape
 
