@@ -2,6 +2,7 @@ import json
 import shutil
 import sqlite3
 import subprocess
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -142,8 +143,9 @@ def _path_lane(con, query: str, accums: dict[str, Accum]) -> None:
                 (match,),
             ):
                 ids.add(int(row["rowid"]))
-        except sqlite3.OperationalError:
-            pass
+        except sqlite3.OperationalError as exc:
+            # Continue with exact/stem fallback matching if FTS query is unavailable.
+            print(f"Warning: path FTS query failed: {exc}", file=sys.stderr)
     for row in con.execute(
         """
         SELECT id FROM files
